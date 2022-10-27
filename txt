@@ -1,0 +1,22 @@
+set serveroutput on;
+create table x(
+nums number);
+insert into x 
+values(4);
+
+create table y(old_nums number, new_nums number);
+
+select*from x;
+select*from y;
+
+create or replace trigger update_from_x
+before update on x
+for each row
+begin
+insert into y values(:old.nums,:new.nums);
+end;
+/
+
+update x
+set nums=7
+where nums=1;
